@@ -18,13 +18,10 @@ public class ImageController {
     @PostMapping
     public ResponseEntity<Image> saveImage(
             @RequestParam("image") MultipartFile image) {
-        try {
-            if(imageService.isAllowedImage(image.getBytes())){
-                var imageBuild = Image.builder()
-                        .image(image.getBytes())
-                        .build();
 
-                var response = imageService.saveImage(imageBuild);
+        try {
+            var response = imageService.saveImage(image.getBytes());
+            if(response != null){
                 return ResponseEntity.status(HttpStatus.CREATED).body(response);
             } else {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -32,5 +29,6 @@ public class ImageController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+
     }
 }

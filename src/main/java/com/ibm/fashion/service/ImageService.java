@@ -22,14 +22,12 @@ public class ImageService {
 
     private final CloudVisionTemplate cloudVisionTemplate;
 
-    public Image saveImage(Image imageDto) {
-        var image = Image.builder()
-                .image(imageDto.getImage())
-                .build();
-
-        imageRepository.save(image);
-
-        return image;
+    public Image saveImage(byte[] imageBytes) {
+        if (isAllowedImage(imageBytes)) {
+            var image = Image.builder().image(imageBytes).build();
+            return imageRepository.save(image);
+        }
+        return null;
     }
 
     public List<String> detectLabelsInImage(byte[] image) {
@@ -59,23 +57,27 @@ public class ImageService {
             return null;
         }
 
+        System.out.println(response.getLocalizedObjectAnnotations(0).getName());
+
         return response.getLocalizedObjectAnnotations(0).getName();
     }
 
-    public boolean isAllowedImage(byte[] image){
+    private boolean isAllowedImage(byte[] image){
         List<String> detectedLabels = detectLabelsInImage(image);
         String detectedObject = detectObjectInImage(image);
 
-        if(detectedObject == null){
-            return detectedLabels.stream().anyMatch(this::isAllowedItem);
-        }
-
-        return detectedLabels.stream().anyMatch(this::isAllowedItem) || isAllowedItem(detectedObject);
+        return (detectedLabels.stream().anyMatch(this::isAllowedItem) || isAllowedItem(detectedObject))
+                && (detectedLabels.stream().noneMatch(this::isProhibitedItem) && !isProhibitedItem(detectedObject));
     }
 
     private boolean isAllowedItem(String item){
         List<String> allowedItems = categoryRepository.findAllByIsAllowed(true);
         return allowedItems.contains(item);
+    }
+
+    private boolean isProhibitedItem(String item){
+        List<String> prohibitedItems = categoryRepository.findAllByIsAllowed(false);
+        return prohibitedItems.contains(item);
     }
 
 }

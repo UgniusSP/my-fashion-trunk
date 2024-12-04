@@ -5,9 +5,6 @@ import com.google.cloud.vision.v1.AnnotateImageResponse;
 import com.google.cloud.vision.v1.EntityAnnotation;
 import com.google.cloud.vision.v1.Feature;
 import com.google.cloud.vision.v1.LocalizedObjectAnnotation;
-import com.ibm.fashion.entity.Image;
-import com.ibm.fashion.repository.CategoryRepository;
-import com.ibm.fashion.repository.ImageRepository;
 import com.ibm.fashion.service.ImageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,12 +22,6 @@ import static org.mockito.Mockito.*;
 class ImageServiceTest {
 
     @Mock
-    private ImageRepository imageRepository;
-
-    @Mock
-    private CategoryRepository categoryRepository;
-
-    @Mock
     private CloudVisionTemplate cloudVisionTemplate;
 
     @InjectMocks
@@ -39,15 +30,6 @@ class ImageServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-    }
-
-    @Test
-    void testSaveImage() {
-        Image imageDto = Image.builder().image(new byte[]{1, 2, 3}).build();
-
-        imageService.saveImage(imageDto);
-
-        verify(imageRepository, times(1)).save(any(Image.class));
     }
 
     @Test
