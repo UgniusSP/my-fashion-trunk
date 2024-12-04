@@ -32,10 +32,6 @@ public class ImageService {
         return image;
     }
 
-    public List<Image> getAllImages() {
-        return imageRepository.findAll();
-    }
-
     public List<String> detectLabelsInImage(byte[] image) {
         ByteArrayResource resource = new ByteArrayResource(image);
 
