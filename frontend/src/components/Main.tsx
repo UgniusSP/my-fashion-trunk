@@ -4,7 +4,7 @@ import {Table} from "./Table";
 
 export const Main = () => {
     const [file, setFile] = useState<File | null>(null);
-    const { loading, error, success, response, postData } = usePost('http://localhost:8080/images');
+    const { loading, error, success, postData } = usePost('http://localhost:8080/images');
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
