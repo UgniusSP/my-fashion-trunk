@@ -42,7 +42,7 @@ The solution checks whether the uploaded image depicts items belonging to the al
   
 3. Configure Google Cloud service account and key
   
-   * Go to your Google Cloud account and follow this tutorial to create you service account and generate key: https://docs.fortinet.com/document/fortianalyzer/6.2.0/cookbook/9036/creating-a-google-service-account-key
+   * Go to your Google Cloud account and follow this tutorial to create your service account and generate key: https://docs.fortinet.com/document/fortianalyzer/6.2.0/cookbook/9036/creating-a-google-service-account-key
    * Now when you got JSON file in your device, you will need to put the path of this file to environment variable. Your `application.yml` file `cloud` section should look like this: 
 
      ```bash
