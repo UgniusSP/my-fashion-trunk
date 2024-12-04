@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  backend:
+    build: ./
+    environment:
+      SPRING_DATASOURCE_URL: ${DOCKER_DB_URL}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      GOOGLE_APPLICATION_CREDENTIALS: /credentials/google-vision.json
+    volumes:
+      - ${GOOGLE_APPLICATION_CREDENTIALS}:/credentials/google-vision.json
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
