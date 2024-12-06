@@ -76,6 +76,23 @@ The solution checks whether the uploaded image depicts items belonging to the al
 
    * Make sure to replace credentials.
 
+## Docker
+
+To run the application using Docker, follow these steps:
+
+* Ensure Docker Desktop is installed and running.
+* Build and run the Docker containers: `docker-compose up`
+* This command will:
+
+    Start the PostgreSQL database container.\
+    Launch the Spring Boot backend.\
+    Launch the Vue.js frontend.\
+    Access the application:
+
+* Use `docker-compose down` to stop the containers when done.
+* Backend: http://localhost:8080
+* Frontend: http://localhost:3000
+  
 ## Usage
 
 Access the application through your browser (http://localhost:3000)
