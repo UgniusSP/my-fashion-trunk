@@ -86,7 +86,7 @@ To run the application using Docker, follow these steps:
 
     Start the PostgreSQL database container.\
     Launch the Spring Boot backend.\
-    Launch the Vue.js frontend.\
+    Launch the React frontend.\
     Access the application:
 
 * Use `docker-compose down` to stop the containers when done.
